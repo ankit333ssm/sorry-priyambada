@@ -1,34 +1,83 @@
-// =========================
-// NO BUTTON BHAGEGA 😄
-// =========================
-
 const noBtn = document.getElementById("no");
 const yesBtn = document.getElementById("yes");
+const thanks = document.getElementById("thanks");
 
-noBtn.addEventListener("mouseenter", () => {
+let count = 0;
 
-    const maxX = window.innerWidth - noBtn.offsetWidth - 20;
-    const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+// =========================
+// NO BUTTON EFFECT
+// =========================
 
-    const x = Math.random() * maxX;
-    const y = Math.random() * maxY;
+function moveButtons(){
+
+    count++;
+
+    // No button chhota hota jayega
+    let noScale = Math.max(1 - (count * 0.06),0.15);
+    noBtn.style.transform = `scale(${noScale})`;
+
+    // Yes button bada hota jayega
+    let yesScale = 1 + (count * 0.08);
+
+    // Random position for YES
+    let yesX = Math.random() * (window.innerWidth - 220);
+    let yesY = Math.random() * (window.innerHeight - 120);
+
+    yesBtn.style.position = "fixed";
+    yesBtn.style.left = yesX + "px";
+    yesBtn.style.top = yesY + "px";
+    yesBtn.style.transform = `scale(${yesScale})`;
+
+    // Random position for NO
+    let noX = Math.random() * (window.innerWidth - 150);
+    let noY = Math.random() * (window.innerHeight - 80);
 
     noBtn.style.position = "fixed";
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
+    noBtn.style.left = noX + "px";
+    noBtn.style.top = noY + "px";
 
-});
+    // Funny Text
 
-// Mobile touch support
-noBtn.addEventListener("touchstart", (e) => {
+    if(count==3){
+        noBtn.innerHTML="🥺 Pakka No?";
+    }
+
+    if(count==6){
+        noBtn.innerHTML="😢 Soch Lo...";
+    }
+
+    if(count==9){
+        noBtn.innerHTML="❤️ Please...";
+    }
+
+    if(count==12){
+        noBtn.innerHTML="😭 Ek Baar Aur Soch Lo";
+    }
+
+    // 15th Time
+
+    if(count>=15){
+
+        noBtn.style.display="none";
+
+        yesBtn.style.position="fixed";
+        yesBtn.style.left="50%";
+        yesBtn.style.top="50%";
+        yesBtn.style.transform="translate(-50%,-50%) scale(2.2)";
+
+        yesBtn.innerHTML="❤️ Bas Yehi Dabao ❤️";
+
+    }
+
+}
+
+noBtn.addEventListener("mouseenter",moveButtons);
+
+noBtn.addEventListener("touchstart",function(e){
 
     e.preventDefault();
 
-    const maxX = window.innerWidth - noBtn.offsetWidth - 20;
-    const maxY = window.innerHeight - noBtn.offsetHeight - 20;
-
-    noBtn.style.left = (Math.random() * maxX) + "px";
-    noBtn.style.top = (Math.random() * maxY) + "px";
+    moveButtons();
 
 });
 
@@ -36,13 +85,11 @@ noBtn.addEventListener("touchstart", (e) => {
 // YES BUTTON
 // =========================
 
-yesBtn.addEventListener("click", () => {
+yesBtn.addEventListener("click",()=>{
 
-    document.querySelector(".card").style.display = "none";
+    document.querySelector(".card").style.display="none";
 
-    const thanks = document.getElementById("thanks");
-
-    thanks.style.display = "flex";
+    thanks.style.display="flex";
 
     createHearts();
 
@@ -58,7 +105,7 @@ function createHearts(){
 
     setInterval(()=>{
 
-        const heart = document.createElement("div");
+        const heart=document.createElement("div");
 
         heart.className="heart";
 
@@ -68,7 +115,7 @@ function createHearts(){
 
         heart.style.fontSize=(20+Math.random()*30)+"px";
 
-        heart.style.animationDuration=(3+Math.random()*4)+"s";
+        heart.style.animationDuration=(3+Math.random()*3)+"s";
 
         document.body.appendChild(heart);
 
@@ -76,7 +123,7 @@ function createHearts(){
 
             heart.remove();
 
-        },7000);
+        },6000);
 
     },250);
 
@@ -86,7 +133,7 @@ function createHearts(){
 // FLOWERS
 // =========================
 
-const flowers=["🌸","🌺","🌹","💮","🌷"];
+const flowers=["🌹","🌸","🌺","🌷","💮"];
 
 function createFlowers(){
 
@@ -100,9 +147,9 @@ function createFlowers(){
 
         flower.style.left=Math.random()*100+"vw";
 
-        flower.style.fontSize=(20+Math.random()*25)+"px";
+        flower.style.fontSize=(20+Math.random()*20)+"px";
 
-        flower.style.animationDuration=(5+Math.random()*5)+"s";
+        flower.style.animationDuration=(5+Math.random()*3)+"s";
 
         document.body.appendChild(flower);
 
@@ -110,37 +157,35 @@ function createFlowers(){
 
             flower.remove();
 
-        },10000);
+        },8000);
 
-    },400);
+    },350);
 
 }
 
 // =========================
-// TYPEWRITER EFFECT
+// TYPEWRITER
 // =========================
 
-window.addEventListener("load",()=>{
+window.onload=function(){
 
     const typing=document.getElementById("typing");
 
-    const html=typing.innerHTML;
+    const text=typing.innerHTML;
 
     typing.innerHTML="";
 
     let i=0;
 
-    const speed=15;
-
     function type(){
 
-        if(i<html.length){
+        if(i<text.length){
 
-            typing.innerHTML=html.substring(0,i);
+            typing.innerHTML=text.substring(0,i);
 
             i++;
 
-            setTimeout(type,speed);
+            setTimeout(type,15);
 
         }
 
@@ -148,4 +193,4 @@ window.addEventListener("load",()=>{
 
     type();
 
-});
+};
